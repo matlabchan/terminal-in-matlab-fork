@@ -154,7 +154,7 @@ classdef (Sealed) terminal < handle
         GITHUB_REPO = 'matlab/terminal-in-matlab'
         MCP_SERVER_BINARY = 'matlab-mcp-server'
         MCP_SERVER_REPO = 'matlab/matlab-mcp-server'
-        MCP_MIN_SERVER_VERSION = '0.11.0'
+        MCP_MIN_SERVER_VERSION = '0.13.0'
         % Agentic Toolkit constants
         AGENTIC_MATLAB_REPO = 'matlab/matlab-agentic-toolkit'
         AGENTIC_SIMULINK_REPO = 'matlab/simulink-agentic-toolkit'
@@ -2052,10 +2052,14 @@ classdef (Sealed) terminal < handle
                 apiKey = string(connector.internal.getConfig("apiKey"));
             end
 
+            baseUrl = matlab.net.URI(connector.getBaseUrl);
+            basePath = string(baseUrl.EncodedPath);
+
             details = struct( ...
                 'port', connector.securePort, ...
                 'apiKey', apiKey, ...
-                'certificate', string(connector.getCertificateLocation));
+                'certificate', string(connector.getCertificateLocation), ...
+                'basePath', basePath);
             connectionDetailsJSON = jsonencode(details);
         end
 
